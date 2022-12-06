@@ -1,8 +1,12 @@
 package codewars;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class TinkoffZadachaA {
@@ -11,20 +15,23 @@ public class TinkoffZadachaA {
 		// input file block
 		try {
 
-			int count = 0;
-
 			Scanner reader = new Scanner(new File("input.txt"));
-			reader.nextLine();
+			reader.nextLine();// ignoring first line
+			while (reader.hasNext()) {
 
-			var data = reader.nextLine().split(" ");
-			reader.close();
-			int[] array = new int[data.length];
-			for (int i = 0; i < data.length; i++) {
-				array[i] = Integer.parseInt(data[i]);
+				var array = reader.nextLine().split("");
+
+				Arrays.sort(array);
+				if (array[0].equals(array[1]) && array[2].equals(array[3])) {
+					writeResult("Yes");
+				} else {
+					writeResult("No");
+				}
+
 			}
-			
-			
 
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		} catch (Exception e) {
 			System.out.println("An error occurred.");
 			e.printStackTrace();
@@ -32,9 +39,12 @@ public class TinkoffZadachaA {
 	}
 
 	// output file block
-	public static void writeResult(int result) throws IOException {
-		FileWriter writer = new FileWriter("output.txt");
-		writer.write(Integer.toString(result));
+	public static void writeResult(String result) throws IOException {
+		PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("output.txt", true))); //need "true" for rewriting is off.
+		writer.append(result);
+		System.out.print(result);
+		writer.write("\n");
+		System.out.print("\n");
 		writer.close();
 	}
 
