@@ -1,19 +1,37 @@
 package codewars;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Comparator;
 
 public class AreTheyTheSame {
 	public static boolean comp(int[] a, int[] b) {
-		boolean result;
-		List<int[]> collectionA = Arrays.asList(a);
-		List<int[]> collectionB = Arrays.asList(b);
-		collectionA.stream().anyMatch(collectionB);
-		return result;
+
+		if (a == null || b == null || a.length != b.length) {
+			return false;
+		}
+
+		Integer[] integerA = new Integer[a.length];
+		for (int i = 0; i < a.length; i++) {
+			integerA[i] = a[i];
+		}
+
+		Arrays.sort(integerA, new Comparator<Integer>() {
+			@Override
+			public int compare(Integer int1, Integer int2) {
+				return Math.abs(int1) - Math.abs(int2);
+			}
+		});
+		Arrays.sort(b);
+
+		for (int i = 0; i < integerA.length; i++) {
+			if (integerA[i] * integerA[i] != b[i]) {
+				return false;
+			}
+		}
+		return true;
 	}
+
 	public static void main(String[] args) {
-		int[] a = {2,3,4,5};
-		int[] b = {25,4,25,9,16,0};
-		System.out.println(comp(a, b));
+
 	}
 }
