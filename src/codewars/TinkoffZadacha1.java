@@ -1,28 +1,23 @@
 package codewars;
 
-
-import java.io.IOException;
 import java.util.Scanner;
 
 public class TinkoffZadacha1 {
 
 	public static void main(String args[]) {
+		int result = 0;
 
-		Scanner reader = new Scanner(System.in);
-		while (reader.hasNext()) {
-			String[] data = reader.nextLine().split("");
-
-			int result = 0;
-			for (int i = 0; i < data.length; i++) {
-				result += Integer.valueOf(data[i]);
-			}
+		Scanner reader = new Scanner(System.in);		
+			String data = reader.nextLine();
+			String data1 = reader.nextLine();
+			result = Integer.valueOf(data) + Integer.valueOf(data1)  ;
 			
-		}
-		reader.close();
-	}
+			Integer.toString(result);
+			System.out.print(result);
 
-	public static void writeResult(int result) throws IOException {
-		System.out.print(result);
+			
 		
+		reader.close();
+
 	}
 }
