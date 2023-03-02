@@ -21,7 +21,7 @@ public class TinkoffZadacha2 {
 			}
 		}
 	
-		int index = line.indexOf(' ');
+		int index = line.length;
 				
 			
 		
