@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class TicTacToe {
     static char symbol;
-    static char fpSymbol;
-    static char spSymbol;
+    static String fpSymbol;
+    static String spSymbol;
     static char[][] board = new char[3][3];
     static boolean exit = false;
 
@@ -21,33 +21,25 @@ public class TicTacToe {
         Scanner sc = new Scanner(System.in);
         String emptyCatcher;
         while (true) {
-            emptyCatcher = sc.nextLine();
-            if (emptyCatcher.isEmpty()) {
+            fpSymbol = sc.nextLine();
+            if (fpSymbol.isEmpty()) {
                 System.out.print("Enter something: ");
             } else {
                 break;
             }
         }
-        fpSymbol = emptyCatcher.charAt(0);
+        fpSymbol = fpSymbol.substring(0, 1);
 
         System.out.print("Enter second player symbol: ");
         while (true) {
-            emptyCatcher = sc.nextLine();
-            if (emptyCatcher.isEmpty()) {
-                System.out.print("Enter something: ");
+            spSymbol = sc.nextLine();
+            if (spSymbol.isEmpty() || spSymbol.substring(0, 1).equals(fpSymbol)) {
+                System.out.print("First symbol is wrong or already in use.Try again: ");
             } else {
                 break;
             }
         }
-        while (true) {
-            spSymbol = emptyCatcher.charAt(0);
-            if (spSymbol == fpSymbol) {
-                System.out.print("This symbol is already in use. Try again: ");
-            } else {
-                break;
-            }
-        }
-        symbol = fpSymbol;
+        symbol = fpSymbol.charAt(0);
     }
 
     public static void gameStarter() {
@@ -64,22 +56,14 @@ public class TicTacToe {
     public static void placeChooser() {
         while (true) {
             Scanner scanner = new Scanner(System.in);
-            char firstCharCoordinate = 'd';
-            int secondCoordinate;
+            String firstCharCoordinate;
+            String secondCoordinate;
             String emptyCatcher;
             System.out.println("Player " + symbol + "! It's your turn!");
             System.out.print("Enter your first game coordinates: ");
             while (true) {
-                emptyCatcher = scanner.nextLine();
-                if (emptyCatcher.isEmpty()) {
-                    System.out.print("Enter something: ");
-                } else {
-                    break;
-                }
-            }
-            while (true) {
-                firstCharCoordinate = emptyCatcher.charAt(0);
-                if (firstCharCoordinate != 'a' && firstCharCoordinate != 'b' && firstCharCoordinate != 'c') {
+                firstCharCoordinate = scanner.nextLine();
+                if (firstCharCoordinate.isEmpty() || (!firstCharCoordinate.equals("a") && !firstCharCoordinate.equals("b") && !firstCharCoordinate.equals("c"))) {
                     System.out.print("Wrong character, please try again: ");
                 } else {
                     break;
@@ -88,16 +72,8 @@ public class TicTacToe {
 
             System.out.print("Enter your second game coordinates: ");
             while (true) {
-                emptyCatcher = scanner.nextLine();
-                if (emptyCatcher.isEmpty()) {
-                    System.out.print("Enter something: ");
-                } else {
-                    break;
-                }
-            }
-            while (true) {
-                secondCoordinate = Character.getNumericValue(emptyCatcher.charAt(0));
-                if (!(secondCoordinate < 3 && secondCoordinate >= 0)) {
+                secondCoordinate = scanner.nextLine();
+                if (secondCoordinate.isEmpty() || (!secondCoordinate.equals("0") && !secondCoordinate.equals("1") && !secondCoordinate.equals("2"))) {
                     System.out.print("Wrong digit, please try again: ");
                 } else {
                     break;
@@ -105,29 +81,29 @@ public class TicTacToe {
             }
 
             int firstInt = convert(firstCharCoordinate);
-            if (Character.isAlphabetic(board[secondCoordinate][firstInt])) {
+            int secondInt = Integer.parseInt(secondCoordinate);
+            if (Character.isAlphabetic(board[secondInt][firstInt])) {
                 System.out.print("The Place has already taken");
                 placeChooser();
             }
-            board[secondCoordinate][firstInt] = symbol;
+            board[secondInt][firstInt] = symbol;
             winnerCheck();
 
             if (exit) System.exit(0);
 
-            symbol = (symbol == spSymbol) ? fpSymbol : spSymbol;
+            symbol = (symbol == spSymbol.charAt(0)) ? fpSymbol.charAt(0) : spSymbol.charAt(0);
             gameStarter();
-
         }
     }
 
-    public static int convert(char letter) {
-        if (letter == 'a') {
+    public static int convert(String letter) {
+        if (letter.equalsIgnoreCase("a")) {
             return 0;
         }
-        if (letter == 'b') {
+        if (letter.equalsIgnoreCase("b")) {
             return 1;
         }
-        if (letter == 'c') {
+        if (letter.equalsIgnoreCase("c")) {
             return 2;
         }
         return 0;
@@ -162,10 +138,3 @@ public class TicTacToe {
         game();
     }
 }
-// секонд координейт
-// ввод пустоты
-// боты
-
-//убрана ошибка при вводе более 1 символа в бук координату, теперь используется только певый символ.
-//убрана ошибка при вводе бук в числ координату.
-//убрана ошибка при вводе пустоты
